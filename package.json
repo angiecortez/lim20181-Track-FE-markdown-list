@@ -1,0 +1,23 @@
+{
+  "name": "lim20181-track-fe-markdown-list",
+  "version": "1.0.0",
+  "description": "## Preámbulo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angiecortez/lim20181-Track-FE-markdown-list.git"
+  },
+  "author": "angie cortez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/angiecortez/lim20181-Track-FE-markdown-list/issues"
+  },
+  "homepage": "https://github.com/angiecortez/lim20181-Track-FE-markdown-list#readme",
+  "dependencies": {
+    "link-check": "^4.4.4",
+    "markdown-link-extractor": "github:angiecortez/markdown-link-extractor"
+  }
+}
