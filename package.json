@@ -12,6 +12,10 @@
   },
   "author": "angie cortez",
   "license": "ISC",
+  "bin": {
+    "mdLinks": "./cli.js"
+  },
+
   "bugs": {
     "url": "https://github.com/angiecortez/lim20181-Track-FE-markdown-list/issues"
   },
