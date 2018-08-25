@@ -1,21 +1,25 @@
 {
-  "name": "lim20181-track-fe-markdown-list",
+  "name": "angiecortez-lim20181-track-fe-markdown-list",
   "version": "1.0.0",
-  "description": "## Preámbulo",
+  "description": "mdLinks",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin":{
+    "mdLinks": "./cli.js",
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/angiecortez/lim20181-Track-FE-markdown-list.git"
   },
+  "keywords": [
+    "markdown",
+    "mdLinks",
+    "read-links"
+  ],
   "author": "angie cortez",
   "license": "ISC",
-  "bin": {
-    "mdLinks": "./cli.js"
-  },
-
   "bugs": {
     "url": "https://github.com/angiecortez/lim20181-Track-FE-markdown-list/issues"
   },
