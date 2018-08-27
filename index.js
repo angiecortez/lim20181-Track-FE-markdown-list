@@ -39,6 +39,8 @@ const mdLinks = (path, options) => new Promise((resolve, reject) => {
   let linkArray = [];
   // Store the markdown files
   let filesArray = [];
+  let countLinks = 0;
+
   path = fs.realpathSync(path);
   console.log(`Path: ${path}`);
   const stats = fs.statSync(path);
@@ -49,7 +51,7 @@ const mdLinks = (path, options) => new Promise((resolve, reject) => {
     // Count for exit the cicle
     let counter = 0;
     // Count of links
-    let countLinks = 0;
+    // let countLinks = 0;
     filesArray.forEach((file) => {
       // console.log(`Extrayendo enlaces del directorio: ${file}`);
       let extractedLinks = extractLinks(file);
@@ -65,29 +67,32 @@ const mdLinks = (path, options) => new Promise((resolve, reject) => {
               file: file,
               href: result.link,
               text: link.text,
-
               status: result.statusCode,
               ok: result.status === 'alive',
-              totalLinks: countLinks
             //  text: result.text, //Undefined
             });
-            counter++;
-          } else {
-            linkArray.push({
-              file: file,
-              href: result.link,
-            //  text: result.text, // undefined
-            });
+
             counter++;
           }
+          // else {
+          //   linkArray.push({
+          //     file: file,
+          //     href: result.link,
+          //   //  text: result.text, // undefined
+          //   });
+          //   counter++;
+          // }
           // The promise is fulfilled
           if (counter === countLinks) resolve(linkArray);
+          console.log(`existen ${countLinks} links es esta carpeta`);
+
         });
       });
       console.log("\n");
     });
   } else {
     const extactedLinks = extractLinks(path);
+    // console.log(extactedLinks.length);
     extactedLinks.forEach(link => {
       if (options.validate) {
         linkCheck(link.href, (err, result) => {
@@ -98,21 +103,31 @@ const mdLinks = (path, options) => new Promise((resolve, reject) => {
             text: link.text,
             file: path,
             status: result.statusCode,
-            ok: result.status === 'alive'
+            ok: result.status === 'alive',
           });
           if (linkArray.length === extactedLinks.length) {
+            console.log(` existen ${extactedLinks.length} links en este archivo`);
             resolve(linkArray);
           }
         });
-      } else {
-        linkArray.push({
-          href: link.href,
-          text: link.text,
-          file: path
-        });
+      }
+      // else {
+      //   linkArray.push({
+      //     href: link.href,
+      //     text: link.text,
+      //     file: path
+      //   });
         if (linkArray.length === extractLinks.length) {
           resolve(linkArray);
         }
+      // }
+      else if (options.stat) {
+        linkArray.push({
+          totalLinks: extactedLinks.length,
+          uniques: null
+        })
+      }
+      else if (options.stat && options.validate) {
       }
     });
   }
@@ -121,3 +136,4 @@ const mdLinks = (path, options) => new Promise((resolve, reject) => {
 mdLinks('src', { validate: true }).then((links) => {
   console.log(links);
 }).catch(console.error);
+module.exports = mdLinks;
