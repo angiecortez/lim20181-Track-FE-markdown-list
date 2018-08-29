@@ -15,8 +15,7 @@ const grab = (flag) => {
   // console.log(process.argv);
   const index = process.argv.indexOf(flag);
   if (process.argv.indexOf(2)) {
-    path1 = process.argv[2];
-    // console.log(path1);
+    path1 = process.argv[2]; // console.log(path1);
   }
   return (index === -1) ? false : true;
 }
@@ -31,39 +30,3 @@ if (options.help) {
  mdLinks(path1, options)
  .then(response=> console.log(response))
  .catch(err => console.log(err));
-
-// const validateLinkFunction = (linkTotal) => {
-//   linkTotal.forEach(link =>{
-//     if (err) return reject(err);
-//     if (options.validate) {
-//       linkCheck(link.href, (err, result) => {
-//         if (err) return reject(err);
-//         linkArray.push({
-//           href: link.href,
-//           text: link.text,
-//           file: path,
-//           status: result.statusCode,
-//           ok: result.status === 'alive',
-//         });
-//        // counter++;
-//         if (linkArray.length === extactedLinks.length) {
-//           console.log(` existen ${extactedLinks.length} links en este archivo`);
-//           resolve(linkArray);
-//         }
-//       });
-//     }
-//       else if (options.stat) {
-//         linkArray.push({
-//           totalLinks: console.log(`existen ${extactedLinks.length} links en este archivo`),
-//           uniques: null,
-//         });
-//       }
-//       else if (options.stat && options.validate) {
-//         linkArray.push({
-//           totalLinks: console.log(`existen ${extactedLinks.length} links en este archivo`),
-//           uniques: null,
-//           broken: null
-//         })
-//       }
-//   })
-// }

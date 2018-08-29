@@ -4,20 +4,15 @@
   "description": "mdLinks",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "bin": {
-    "mdLinks": "./cli.js",
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/angiecortez/lim20181-Track-FE-markdown-list.git"
   },
-  "keywords": [
-    "markdown",
-    "mdLinks",
-    "read-links"
-  ],
+  "bin":{
+    "mdLinks": "./cli.js"
+  },
   "author": "angie cortez",
   "license": "ISC",
   "bugs": {
@@ -27,5 +22,6 @@
   "dependencies": {
     "link-check": "^4.4.4",
     "markdown-link-extractor": "github:angiecortez/markdown-link-extractor"
-  }
+  },
+  "devDependencies": {}
 }
