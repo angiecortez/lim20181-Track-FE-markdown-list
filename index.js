@@ -1,8 +1,7 @@
-'use strict '
+"use strict";
 const fs = require('fs');
 const linkCheck = require('link-check');
 const markdownLinkExtractor = require('markdown-link-extractor');
-
 
 // Extrae los links del archivo dado
 const extractLinks = (path) => {
@@ -33,10 +32,13 @@ const directories = (dir) => {
 }
 
 async function mdLinks(path, options) {
+
   let promises = [];
   let promise = new Promise((resolve, reject) => {
+
     path = fs.realpathSync(path);
     const stats = fs.statSync(path);
+
     if (stats.isDirectory()) {
       // Store the markdown files
       directories(path).forEach(file => {
@@ -60,7 +62,7 @@ async function mdLinks(path, options) {
 }
 
 // Promesa a ser llamada
-const pushLink = (path, link) =>{
+const pushLink = (path, link) => {
   let linkArray = [];
   return new Promise((resolve, reject) => linkCheck(link.href, (err, result) => {
     // Lanza el error
@@ -74,7 +76,6 @@ const pushLink = (path, link) =>{
       ok: result.status === 'alive'
     });
     resolve(linkArray);
-
   }));
 }
 
@@ -89,15 +90,13 @@ const getLinks = (path, options) => {
   let broken = 0;
 
   let result = null;
-
   // Bucle para validar los enlacs
   links.forEach(link => promises.push(pushLink(path, link)));
-
   // Problema dos para leer los datos con directorios
   return Promise.all(promises).then(res => {
     let linksHrefs = [];
-
     res.filter((item) => linksHrefs.push(item[0].href));
+
     // Obtiene el total y los únicos
     total = linksHrefs.length;
     uniq = linksHrefs.filter((item, index, array) => array.indexOf(item) === index);
@@ -109,16 +108,19 @@ const getLinks = (path, options) => {
     };
     if (options.validate && options.stat) {
       // Realiza la cuenta de los enlaces rotos
-      res.map(r => {
+      // console.log(res);
+       res.map(r => {
         if (r[0].status != 200) broken++;
       });
       // Crea el array de lo que se necesita
       result.broken = broken;
-
+      console.log(result);
+      // console.log(total);
       return result;
     } else if (options.validate) {
       return res.map(r => r[0]);
     } else if (options.stat) {
+      console.log(result);
       return result;
     } else {
       return result = {
@@ -127,12 +129,14 @@ const getLinks = (path, options) => {
     }
   });
 }
-
 // mdLinks('src/', {
-//     validate: true,
-//     stat: false })
-// .then(response => {
+//     validate: false,
+//     stat: true
+//   }).then(response => {
 //     console.log(response);
+//
 //     console.log("fin.");
-//   }).catch(err => console.log(err));
+//   })
+//   .catch(err => console.log(err));
+
 module.exports = mdLinks;
