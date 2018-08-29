@@ -9,8 +9,7 @@ const extractLinks = (path) => {
   return markdownLinkExtractor(markdown);
 };
 
-/* Walk through a dir for get all files
- * @ param {string} dir Directory where gets all files */
+/* Walk through a dir for get all files * @ param {string} dir Directory where gets all files */
 const directories = (dir) => {
   let results = [];
   const list = fs.readdirSync(dir);
@@ -32,13 +31,10 @@ const directories = (dir) => {
 }
 
 async function mdLinks(path, options) {
-
   let promises = [];
   let promise = new Promise((resolve, reject) => {
-
     path = fs.realpathSync(path);
     const stats = fs.statSync(path);
-
     if (stats.isDirectory()) {
       // Store the markdown files
       directories(path).forEach(file => {
@@ -49,16 +45,7 @@ async function mdLinks(path, options) {
       promises.push(getLinks(path, options));
     }
   });
-
-  return Promise.all(promises).then(response => {
-    let r = [];
-    for (let i = 0; i < response.length; i++) {
-      for (let j = 0; j < response[i].length; j++) {
-        r.push(response[i][j]);
-      }
-    }
-    return r;
-  });
+  return Promise.all(promises).then(values => Array.isArray(values[0]) ? values[0] : values);
 }
 
 // Promesa a ser llamada
@@ -67,7 +54,6 @@ const pushLink = (path, link) => {
   return new Promise((resolve, reject) => linkCheck(link.href, (err, result) => {
     // Lanza el error
     if (err) return reject(err);
-
     linkArray.push({
       href: link.href,
       text: link.text,
@@ -114,11 +100,11 @@ const getLinks = (path, options) => {
       });
       // Crea el array de lo que se necesita
       result.broken = broken;
-      console.log(result);
+      // console.log(result);
       // console.log(total);
       return result;
     } else if (options.validate) {
-      return res.map(r => r[0]);
+      return [ ...res.map(r => r[0]) ];
     } else if (options.stat) {
       console.log(result);
       return result;
@@ -129,14 +115,14 @@ const getLinks = (path, options) => {
     }
   });
 }
-// mdLinks('src/', {
-//     validate: false,
-//     stat: true
-//   }).then(response => {
-//     console.log(response);
-//
-//     console.log("fin.");
-//   })
-//   .catch(err => console.log(err));
+mdLinks('README.md', {
+    validate: true,
+    stat: true
+  }).then(response => {
+    console.log(response);
+
+    console.log("fin.");
+  })
+  .catch(err => console.log(err));
 
 module.exports = mdLinks;

@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/angiecortez/lim20181-Track-FE-markdown-list.git"
   },
-  "bin":{
+  "bin": {
     "mdLinks": "./cli.js"
   },
   "author": "angie cortez",
