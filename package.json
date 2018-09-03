@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/angiecortez/lim20181-Track-FE-markdown-list#readme",
   "dependencies": {
+    "jest": "^23.5.0",
     "link-check": "^4.4.4",
     "markdown-link-extractor": "github:angiecortez/markdown-link-extractor"
   },

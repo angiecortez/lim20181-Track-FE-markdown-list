@@ -8,8 +8,9 @@ const extractLinks = (path) => {
   const markdown = fs.readFileSync(path).toString();
   return markdownLinkExtractor(markdown);
 };
-
-/* Walk through a dir for get all files * @ param {string} dir Directory where gets all files */
+  // [ [1, 2, 3], [4, 5, 6] ] -> [1, 2, 3, 4, 5, 6] se usara para concatenar dos arrays que haga en una línea
+const flatten = arr => arr.reduce((memo, item) => memo.concat(item), [])
+/* Walk through a dir for get all files dir Directory where gets all files */
 const directories = (dir) => {
   let results = [];
   const list = fs.readdirSync(dir);
@@ -32,7 +33,7 @@ const directories = (dir) => {
 
 async function mdLinks(path, options) {
   let promises = [];
-  let promise = new Promise((resolve, reject) => {
+  // let promise = new Promise((resolve, reject) => {
     path = fs.realpathSync(path);
     const stats = fs.statSync(path);
     if (stats.isDirectory()) {
@@ -44,8 +45,8 @@ async function mdLinks(path, options) {
       // Manda la promesa al array de promesas
       promises.push(getLinks(path, options));
     }
-  });
-  return Promise.all(promises).then(values => Array.isArray(values[0]) ? values[0] : values);
+  // });
+  return Promise.all(promises).then(values => /*Array.isArray(values[0]) ? values[0] : */ flatten(values));
 }
 
 // Promesa a ser llamada
@@ -82,13 +83,13 @@ const getLinks = (path, options) => {
   return Promise.all(promises).then(res => {
     let linksHrefs = [];
     res.filter((item) => linksHrefs.push(item[0].href));
-
     // Obtiene el total y los únicos
     total = linksHrefs.length;
     uniq = linksHrefs.filter((item, index, array) => array.indexOf(item) === index);
 
     // Crea el array de lo que se necesita
     result = {
+      ruta: path,
       total: total,
       uniq: uniq.length,
     };
@@ -106,7 +107,7 @@ const getLinks = (path, options) => {
     } else if (options.validate) {
       return [ ...res.map(r => r[0]) ];
     } else if (options.stat) {
-      console.log(result);
+      // console.log(result);
       return result;
     } else {
       return result = {
@@ -115,12 +116,11 @@ const getLinks = (path, options) => {
     }
   });
 }
-mdLinks('README.md', {
+mdLinks('src/', {
     validate: true,
-    stat: true
+    stat: false
   }).then(response => {
     console.log(response);
-
     console.log("fin.");
   })
   .catch(err => console.log(err));
