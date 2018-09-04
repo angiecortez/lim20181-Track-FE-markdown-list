@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const path = require('path');
-// const mdLinks = require('./index.js');
+const mdLinks = require('./index.js');
 // console.log(mdLinks);
 let path1;
 let options = {

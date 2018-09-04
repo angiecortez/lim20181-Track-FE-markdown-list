@@ -1,32 +1,36 @@
-const mdLinks = require('/index.js');
+const mdLinks = require('../index.js');
 
-// jest.setTimeout(10000);
-
+// describe('mdLinks', () => {
+//   it('debería exponer función mdLinks', () => {
+//    assert.isFunction(validadorNombre);
+//   });
+// })
+jest.setTimeout(15000);
 test('deberia retornar un arreglo de objetos con [{href, text, file, status, ok}] para la opción --validate ', () => {
   const options = {
     validate: true,
     stats: false,
   }
-  return mdLinks('ANGIE.md', options).then((response) => {
+  return mdLinks('test/ANGIE.md', options).then((response) => {
   expect(response).toEqual([
     {
-      url: 'https://jestjs.io/',
+      href: 'https://jestjs.io/',
       text: 'Jest',
-      file: '/Users/Angie/Documents/javascript/lim20181-Track-FE-markdown-list/test/files/cortez.md',
+      file: '/Users/Angie/Documents/javascript/lim20181-Track-FE-markdown-list/test/ANGIE.md',
       status: 200,
       ok: true
     },
     {
-      url: 'https://es.wikipedia.org/wiki/Markdown',
+      href: 'https://es.wikipedia.org/wiki/Markdown',
       text: 'Markdown',
-      file: '/Users/Angie/Documents/javascript/lim20181-Track-FE-markdown-list/test/files/cortez.md',
+      file: '/Users/Angie/Documents/javascript/lim20181-Track-FE-markdown-list/test/ANGIE.md',
       status: 200,
       ok: true
     },
     {
-      url: 'https://angie.com',
+      href: 'https://angie.com',
       text: 'angie',
-      file: '/Users/Angie/Documents/javascript/lim20181-Track-FE-markdown-list/test/files/cortez.md',
+      file: '/Users/Angie/Documents/javascript/lim20181-Track-FE-markdown-list/test/ANGIE.md',
       status: 0,
       ok: false
     }
@@ -34,31 +38,60 @@ test('deberia retornar un arreglo de objetos con [{href, text, file, status, ok}
 })
 })
 
-// test('deberia retornar total: 3, uniq : 3, broken : 1 para --stats --validate', () => {
-//   const options = {
-//     validate: true,
-//     stats: true,
-//   };
-//   return mdLinks('files/', options).then((response) => {
-//   expect(response).toEqual([
-//     {
-//       total: 3,
-//       uniq: 3,
-//       broken: 1
-//     }]);
-//   };
-// };
-//
-// test('deberia retornar total: 3, uniq : 3 para --stats', () => {
-//   const options = {
-//     validate: false,
-//     stats: true,
-//   };
-//   return mdLinks('files/', options).then((response) => {
-//   expect(response).toEqual([
-//     {
-//       total: 3,
-//       uniq: 3,
-//     }])
-//   }
-// }
+test('deberia retornar total: 3, uniq : 3, broken : 1 para --stats --validate', () => {
+  const options = {
+    validate: true,
+    stat: true,
+  };
+    return mdLinks('test/ANGIE.md', options).then((response) => {
+      // console.log(response);
+    expect(response).toEqual([
+      {
+        total: 3,
+        uniq: 3,
+        broken: 1
+      }
+    ]);
+  });
+});
+
+test('deberia retornar total: 3, uniq : 3 para --stat', () => {
+  const options = {
+    validate: false,
+    stat: true,
+  };
+  return mdLinks('test/ANGIE.md', options).then((response) => {
+  expect(response).toEqual([
+    {
+      total: 3,
+      uniq: 3,
+    }
+  ])
+  });
+})
+
+test('deberia retornar un arreglo de objetos con [{href, text, file, status, ok}] para la opción --validate ', () => {
+  const options = {
+    validate: false,
+    stats: false,
+  }
+  return mdLinks('test/ANGIE.md', options).then((response) => {
+  expect(response).toEqual([
+    {
+      href: 'https://jestjs.io/',
+      text: 'Jest',
+      file: '/Users/Angie/Documents/javascript/lim20181-Track-FE-markdown-list/test/ANGIE.md',
+    },
+    {
+      href: 'https://es.wikipedia.org/wiki/Markdown',
+      text: 'Markdown',
+      file: '/Users/Angie/Documents/javascript/lim20181-Track-FE-markdown-list/test/ANGIE.md',
+    },
+    {
+      href: 'https://angie.com',
+      text: 'angie',
+      file: '/Users/Angie/Documents/javascript/lim20181-Track-FE-markdown-list/test/ANGIE.md',
+    }
+  ])
+})
+})

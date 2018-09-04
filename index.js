@@ -31,7 +31,7 @@ const directories = (dir) => {
   return results;
 }
 
-async function mdLinks(path, options) {
+const mdLinks = (path, options) => {
   let promises = [];
   // let promise = new Promise((resolve, reject) => {
     path = fs.realpathSync(path);
@@ -68,8 +68,7 @@ const pushLink = (path, link) => {
 
 const getLinks = (path, options) => {
   const links = extractLinks(path);
-  // Almacena las promesas que serán llamadas
-  let promises = [];
+  let promises = []; // Almacena las promesas que serán llamadas
   let mylinks = [];
   // Manipulación del array
   let total = 0;
@@ -79,17 +78,14 @@ const getLinks = (path, options) => {
   let result = null;
   // Bucle para validar los enlacs
   links.forEach(link => promises.push(pushLink(path, link)));
-  // Problema dos para leer los datos con directorios
   return Promise.all(promises).then(res => {
     let linksHrefs = [];
     res.filter((item) => linksHrefs.push(item[0].href));
     // Obtiene el total y los únicos
     total = linksHrefs.length;
     uniq = linksHrefs.filter((item, index, array) => array.indexOf(item) === index);
-
     // Crea el array de lo que se necesita
     result = {
-      ruta: path,
       total: total,
       uniq: uniq.length,
     };
@@ -110,19 +106,18 @@ const getLinks = (path, options) => {
       // console.log(result);
       return result;
     } else {
-      return result = {
-        data: ""
-      };
+      return [ ...res.map(r =>{
+        const object = {href:r[0].href, text:r[0].text, file: r[0].file}
+        return object;
+      }) ];
+
     }
   });
 }
 mdLinks('src/', {
-    validate: true,
+    validate: false,
     stat: false
-  }).then(response => {
-    console.log(response);
-    console.log("fin.");
-  })
-  .catch(err => console.log(err));
+  }).then(console.log)
+  .catch(console.error)
 
 module.exports = mdLinks;
