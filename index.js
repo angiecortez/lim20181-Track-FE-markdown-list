@@ -54,7 +54,7 @@ const pushLink = (path, link) => {
   let linkArray = [];
   return new Promise((resolve, reject) => linkCheck(link.href, (err, result) => {
     // Lanza el error
-    if (err) return reject(err);
+    if (err) {return reject(err)};
     linkArray.push({
       href: link.href,
       text: link.text,
@@ -113,10 +113,11 @@ const getLinks = (path, options) => {
     }
   });
 }
-// mdLinks('src/', {
-//     validate: false,
-//     stat: false
-//   }).then(console.log)
-//   .catch(console.error)
+mdLinks('src/', {
+    validate: false,
+    stat: false
+  })
+  // .then(console.log)
+  // .catch(console.error)
 
 module.exports = mdLinks;
