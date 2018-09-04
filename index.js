@@ -113,11 +113,11 @@ const getLinks = (path, options) => {
     }
   });
 }
-mdLinks('src/', {
-    validate: false,
-    stat: false
-  })
-  // .then(console.log)
-  // .catch(console.error)
+// mdLinks('src/', {
+//     validate: false,
+//     stat: true
+//   })
+//  .then(console.log)
+//   .catch(console.error)
 
 module.exports = mdLinks;
