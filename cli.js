@@ -28,5 +28,5 @@ if (options.help) {
 }
 
  mdLinks(path1, options)
- .then(response=> console.log(response))
+ .then(response=> response.map(res => console.log(res)))
  .catch(err => console.log(err));
