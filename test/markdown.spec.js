@@ -1,10 +1,5 @@
 const mdLinks = require('../index.js');
 
-// describe('mdLinks', () => {
-//   it('debería exponer función mdLinks', () => {
-//    assert.isFunction(validadorNombre);
-//   });
-// })
 jest.setTimeout(15000);
 test('deberia retornar un arreglo de objetos con [{href, text, file, status, ok}] para la opción --validate ', () => {
   const options = {

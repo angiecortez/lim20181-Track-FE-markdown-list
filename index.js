@@ -97,7 +97,6 @@ const getLinks = (path, options) => {
       });
       // Crea el array de lo que se necesita
       result.broken = broken;
-      // console.log(result);
       // console.log(total);
       return result;
     } else if (options.validate) {
@@ -114,10 +113,10 @@ const getLinks = (path, options) => {
     }
   });
 }
-mdLinks('src/', {
-    validate: false,
-    stat: false
-  }).then(console.log)
-  .catch(console.error)
+// mdLinks('src/', {
+//     validate: false,
+//     stat: false
+//   }).then(console.log)
+//   .catch(console.error)
 
 module.exports = mdLinks;
